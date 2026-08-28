@@ -1,126 +1,444 @@
 <!DOCTYPE html>
-
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>Get 20% off your Squarespace site</title>
-<meta content="Get 20% off your annual Squarespace subscription. Enter your email and (optional) theme link. We'll create a trial and you'll get the invite from Squarespace." name="description"/>
+<meta content="Get 20% off your annual Squarespace subscription. Enter your email and an optional template link. We create the trial site and invite you through Squarespace." name="description"/>
+<meta content="" name="status-api"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-    :focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
-    html, body { height: 100%; }
-  </style>
+  :root {
+    color-scheme: light;
+  }
+
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  html,
+  body {
+    min-height: 100%;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
+  .progress-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .progress-step {
+    position: relative;
+    min-height: 88px;
+    padding: 0 0 20px 36px;
+    color: #000;
+    opacity: 0.42;
+    transition: opacity 220ms ease;
+  }
+
+  .progress-step::before {
+    position: absolute;
+    top: 20px;
+    left: 5px;
+    width: 10px;
+    height: 10px;
+    border: 1.5px solid #000;
+    border-radius: 50%;
+    background: #fff;
+    content: "";
+    box-sizing: border-box;
+  }
+
+  .progress-step:not(:last-child)::after {
+    position: absolute;
+    top: 34px;
+    bottom: -2px;
+    left: 9px;
+    width: 1px;
+    background: #000;
+    opacity: 0.35;
+    content: "";
+  }
+
+  .progress-step.is-complete,
+  .progress-step.is-active {
+    opacity: 1;
+  }
+
+  .progress-step.is-complete::before {
+    background: #000;
+  }
+
+  .progress-content {
+    min-height: 64px;
+    padding: 13px 15px;
+    border-radius: 4px;
+  }
+
+  .progress-step.is-active .progress-content {
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    color: #fff;
+  }
+
+  .progress-step.is-active .progress-content::after {
+    position: absolute;
+    top: -20%;
+    bottom: -20%;
+    left: -56px;
+    width: 34px;
+    background: rgba(255, 255, 255, 0.32);
+    filter: blur(9px);
+    content: "";
+    transform: skewX(-12deg);
+    animation: progress-scan 1.8s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .progress-title {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .progress-description {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    color: rgba(0, 0, 0, 0.64);
+  }
+
+  .progress-step.is-active .progress-description {
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  @keyframes progress-scan {
+    0% {
+      left: -56px;
+    }
+
+    55%,
+    100% {
+      left: calc(100% + 56px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    .progress-step,
+    .progress-step.is-active .progress-content::after {
+      transition: none;
+      animation: none;
+    }
+  }
+</style>
 </head>
 <body class="bg-white text-gray-900 antialiased">
 <main class="min-h-full flex items-start">
 <div class="mx-auto w-full max-w-md px-4 pt-14 pb-8">
-<!-- Hero -->
 <header class="text-left">
-<h1 class="text-4xl sm:text-4xl font-semibold tracking-tight">
-          Get 20% off your<br/>Squarespace site
-        </h1>
+<h1 class="text-4xl sm:text-4xl font-semibold tracking-normal">
+  Get 20% off your<br/>Squarespace site
+</h1>
 <p class="mt-5 text-sm text-gray-600 leading-relaxed max-w-sm">
-          To get your <strong>20% discount</strong> on your annual <strong>Squarespace</strong>
-          subscription enter your e‑mail address and a link to the Squarespace theme you want to use.
-        </p>
+  To get your <strong>20% discount</strong> on your annual <strong>Squarespace</strong>
+  subscription, enter your email address and a link to the Squarespace template you want to use.
+</p>
 <p class="mt-4 text-xs text-gray-500 leading-relaxed max-w-sm">
-<span class="font-medium">How it works:</span> a trial site will be created and you will
-          get an invite email from Squarespace. After you accept the invite you can delete our account.
-          Choose annual billing to get 20% off on your first payment.
-        </p>
+  <span class="font-medium">How it works:</span> We create a trial site and invite you through
+  Squarespace. Accept the invitation, then we transfer ownership and remove our account.
+  Choose annual billing to get 20% off your first payment.
+</p>
 </header>
-<!-- Form (Web3Forms) -->
-<section class="mt-8">
+
+<section class="mt-8" id="form-section">
 <form action="https://api.web3forms.com/submit" class="space-y-5" id="request-form" method="POST" novalidate="">
-<!-- REQUIRED: replace with your Web3Forms access key -->
 <input name="access_key" type="hidden" value="067d0836-d921-4704-86e9-301ba3f14d97"/>
-<!-- Optional niceties -->
 <input name="subject" type="hidden" value="New Squarespace request"/>
 <input name="from_name" type="hidden" value="sitebuilder-discount.com"/>
-<!-- If you already have a thank-you page, set it here -->
-<!-- <input type="hidden" name="redirect" value="https://www.sitebuilder-discount.com/thanks.html"> -->
 <div>
-<label class="block text-sm font-medium" for="email">Your E‑Mail:</label>
+<label class="block text-sm font-medium" for="email">Your email:</label>
 <input autocomplete="email" class="mt-2 w-full rounded-full border border-gray-300 px-4 py-2.5 focus:border-black" id="email" name="email" placeholder="you@example.com" required="" type="email"/>
 </div>
 <div>
-<label class="block text-sm font-medium" for="templateUrl">Paste Link To Squarespace Theme:</label>
-<input class="mt-2 w-full rounded-full border border-gray-300 px-4 py-2.5 focus:border-black" id="templateUrl" inputmode="url" name="TemplateURL" placeholder="https://www.squarespace.com/templates/your-theme" type="url"/>
+<label class="block text-sm font-medium" for="templateUrl">Squarespace template link:</label>
+<input class="mt-2 w-full rounded-full border border-gray-300 px-4 py-2.5 focus:border-black" id="templateUrl" inputmode="url" name="TemplateURL" placeholder="https://www.squarespace.com/templates/your-template" type="url"/>
 </div>
-<!-- Honeypot against bots -->
 <div aria-hidden="true" class="hidden">
 <label>Leave this field empty</label>
 <input autocomplete="off" id="company" name="botcheck" tabindex="-1" type="text"/>
 </div>
-<button class="w-full rounded-full bg-black text-white py-2.5 text-sm font-medium hover:bg-gray-900 focus-visible:outline-black" type="submit">
-            Create Website
-          </button>
+<button class="w-full rounded-full bg-black text-white py-2.5 text-sm font-medium hover:bg-gray-900 focus-visible:outline-black disabled:cursor-wait disabled:opacity-70" type="submit">
+  Create Website
+</button>
 <p aria-live="polite" class="text-center text-sm text-gray-600" id="form-msg" role="status"></p>
 <p class="mt-1 text-center text-xs text-gray-500">
-            We will not send you any newsletters.
-          </p>
-<input id="hiddenMessage" name="message" type="hidden" value=""/></form>
+  We will not send you any newsletters.
+</p>
+<input id="hiddenMessage" name="message" type="hidden" value=""/>
+</form>
 </section>
+
+<section aria-labelledby="progress-title" class="mt-8" hidden id="progress-section">
+<div class="mb-6">
+<p class="text-xs font-medium text-gray-500">Website progress</p>
+<h2 class="mt-1 text-xl font-semibold tracking-normal" id="progress-title">Your site is being prepared</h2>
+<p aria-live="polite" class="mt-2 text-sm text-gray-600" id="progress-live">Your request has been received.</p>
+</div>
+<ol class="progress-list" id="progress-list">
+<li class="progress-step" data-progress-step>
+<div class="progress-content">
+<span class="progress-title">Request received</span>
+<span class="progress-description">Your website request has reached us.</span>
+</div>
+</li>
+<li class="progress-step" data-progress-step>
+<div class="progress-content">
+<span class="progress-title">Creating your site</span>
+<span class="progress-description">We are opening your template and setting up the trial site.</span>
+</div>
+</li>
+<li class="progress-step" data-progress-step>
+<div class="progress-content">
+<span class="progress-title">Sending your invitation</span>
+<span class="progress-description">Open your mailbox when the Squarespace email arrives and accept it to continue.</span>
+</div>
+</li>
+<li class="progress-step" data-progress-step>
+<div class="progress-content">
+<span class="progress-title">Transferring ownership</span>
+<span class="progress-description">We are making you the owner of the new site.</span>
+</div>
+</li>
+<li class="progress-step" data-progress-step>
+<div class="progress-content">
+<span class="progress-title">Removing our account</span>
+<span class="progress-description">We remove our access after ownership has been transferred.</span>
+</div>
+</li>
+<li class="progress-step" data-progress-step>
+<div class="progress-content">
+<span class="progress-title">Done</span>
+<span class="progress-description">The site is yours. Choose annual billing to receive the discount.</span>
+</div>
+</li>
+</ol>
+<button class="mt-2 text-sm font-medium underline decoration-gray-300 underline-offset-4 hover:decoration-black" id="new-request-button" type="button">
+  Submit another request
+</button>
+</section>
+
 <footer class="mt-14 text-center">
 <p class="text-[11px] text-gray-400">
-          This is a 100% free service by <a class="underline decoration-gray-300 hover:decoration-gray-700" href="https://studiovis.at" rel="noopener noreferrer" target="_blank">webdesign studio vis</a>.
-        </p>
+  This is a 100% free service by <a class="underline decoration-gray-300 hover:decoration-gray-700" href="https://studiovis.at" rel="noopener noreferrer" target="_blank">webdesign studio vis</a>.
+</p>
 </footer>
 </div>
 </main>
 <script>
-    // Client-side validation: squarespace.com optional field, email required
-    const isValidEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-    const isValidTemplateUrl = v => {
-      if (!v) return true;
-      return /squarespace\.com/i.test(v);
-    };
+  const isValidEmail = value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  const isValidTemplateUrl = value => {
+    if (!value) return true;
+    try {
+      const url = new URL(value);
+      return url.protocol === "https:" &&
+        (url.hostname === "squarespace.com" || url.hostname.endsWith(".squarespace.com"));
+    } catch {
+      return false;
+    }
+  };
 
-    const form = document.getElementById("request-form");
-    const msg  = document.getElementById("form-msg");
+  const form = document.getElementById("request-form");
+  const formSection = document.getElementById("form-section");
+  const msg = document.getElementById("form-msg");
+  const progressSection = document.getElementById("progress-section");
+  const progressLive = document.getElementById("progress-live");
+  const progressSteps = Array.from(document.querySelectorAll("[data-progress-step]"));
+  const statusApi = document.querySelector('meta[name="status-api"]').content.trim();
+  const storageKey = "sitebuilder-discount-request";
+  let progressTimers = [];
+  let statusPoll = null;
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      msg.textContent = "";
-      msg.className = "text-center text-sm text-gray-600";
+  const progressMessages = [
+    "Your request has been received.",
+    "We are creating your Squarespace trial site.",
+    "Watch your mailbox for the Squarespace invitation and accept it to continue.",
+    "Your invitation was accepted. We are transferring ownership.",
+    "Ownership was transferred. We are removing our account.",
+    "Done. Your Squarespace site is now yours."
+  ];
 
-      const email = document.getElementById("email").value.trim();
-      const templateUrl = document.getElementById("templateUrl").value.trim();
-      const spamTrap = (document.getElementById("company") || {}).value || "";
+  const statusSteps = {
+    queued: 1,
+    site_created: 2,
+    invite_sent: 2,
+    accepted: 3,
+    ownership_transferred: 4,
+    completed: 5
+  };
 
-      if (spamTrap) { return; }
-      if (!email || !isValidEmail(email)) { msg.textContent = "Enter a valid email address."; return; }
-      if (!isValidTemplateUrl(templateUrl)) { msg.textContent = "Enter any link that contains squarespace.com (or leave it empty)."; return; }
+  function clearProgressTimers() {
+    progressTimers.forEach(window.clearTimeout);
+    progressTimers = [];
+    if (statusPoll) window.clearInterval(statusPoll);
+    statusPoll = null;
+  }
 
-      const submitBtn = form.querySelector('button[type="submit"]');
-      const prevLabel = submitBtn.textContent;
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Sending…";
-
-      const fd = new FormData(form);
-      // Ensure keys for Web3Forms
-      if (!fd.get("access_key")) fd.set("access_key", "YOUR_WEB3FORMS_ACCESS_KEY");
-      // Provide message body (nice email content)
-      fd.set("message", "Email: " + email + "\nTemplateURL: " + (templateUrl || "(blank)"));
-
-      try {
-        const res = await fetch("https://api.web3forms.com/submit", { method: "POST", body: fd });
-        const data = await res.json().catch(() => ({}));
-        if (res.ok && data && (data.success === true || data.message)) {
-          msg.innerHTML = "✔ Request sent. <strong>We’ll invite you shortly.</strong>";
-          msg.className = "mt-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 px-4 py-3 text-base font-medium text-center";
-          form.reset();
-        } else {
-          msg.textContent = (data && data.message) ? data.message : "There was a problem sending your request. Please try again.";
-        }
-      } catch (err) {
-        msg.textContent = "Network error. Please try again.";
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = prevLabel;
+  function setProgress(activeIndex) {
+    progressSteps.forEach((step, index) => {
+      const isComplete = index < activeIndex || (activeIndex === 5 && index === 5);
+      const isActive = index === activeIndex && activeIndex !== 5;
+      step.classList.toggle("is-complete", isComplete);
+      step.classList.toggle("is-active", isActive);
+      if (isActive) {
+        step.setAttribute("aria-current", "step");
+      } else {
+        step.removeAttribute("aria-current");
       }
     });
-    </script>
+    progressLive.textContent = progressMessages[activeIndex];
+  }
+
+  async function refreshRealStatus(requestId) {
+    if (!statusApi || !requestId) return;
+    try {
+      const response = await fetch(
+        statusApi.replace(/\/$/, "") + "/api/public/status/" + encodeURIComponent(requestId),
+        { headers: { accept: "application/json" } }
+      );
+      if (!response.ok) return;
+      const data = await response.json();
+      const nextStep = statusSteps[data.status];
+      if (Number.isInteger(nextStep)) setProgress(nextStep);
+      if (data.status === "completed" && statusPoll) {
+        window.clearInterval(statusPoll);
+        statusPoll = null;
+      }
+    } catch {
+      // The visual flow keeps running while the public status service is unavailable.
+    }
+  }
+
+  function showProgress(request) {
+    clearProgressTimers();
+    formSection.hidden = true;
+    progressSection.hidden = false;
+
+    const elapsed = Math.max(0, Date.now() - request.startedAt);
+    if (elapsed < 1600) {
+      setProgress(0);
+      progressTimers.push(window.setTimeout(() => setProgress(1), 1600 - elapsed));
+      progressTimers.push(window.setTimeout(() => setProgress(2), 42000 - elapsed));
+    } else if (elapsed < 42000) {
+      setProgress(1);
+      progressTimers.push(window.setTimeout(() => setProgress(2), 42000 - elapsed));
+    } else {
+      setProgress(2);
+    }
+
+    refreshRealStatus(request.id);
+    if (statusApi) {
+      statusPoll = window.setInterval(() => refreshRealStatus(request.id), 5000);
+    }
+  }
+
+  function createRequestId() {
+    if (window.crypto && typeof window.crypto.randomUUID === "function") {
+      return window.crypto.randomUUID();
+    }
+    return Date.now().toString(36) + "-" + Math.random().toString(36).slice(2);
+  }
+
+  form.addEventListener("submit", async event => {
+    event.preventDefault();
+    msg.textContent = "";
+    msg.className = "text-center text-sm text-gray-600";
+
+    const email = document.getElementById("email").value.trim();
+    const templateUrl = document.getElementById("templateUrl").value.trim();
+    const spamTrap = (document.getElementById("company") || {}).value || "";
+
+    if (spamTrap) return;
+    if (!email || !isValidEmail(email)) {
+      msg.textContent = "Enter a valid email address.";
+      return;
+    }
+    if (!isValidTemplateUrl(templateUrl)) {
+      msg.textContent = "Enter a valid Squarespace template link, or leave it empty.";
+      return;
+    }
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const previousLabel = submitBtn.textContent;
+    const requestId = createRequestId();
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Sending...";
+
+    const formData = new FormData(form);
+    formData.set("Order ID", requestId);
+    formData.set(
+      "message",
+      "Email: " + email +
+      "\nTemplateURL: " + (templateUrl || "(blank)") +
+      "\nOrder ID: " + requestId
+    );
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+      const data = await response.json().catch(() => ({}));
+      if (response.ok && data && data.success === true) {
+        const request = { id: requestId, startedAt: Date.now() };
+        window.localStorage.setItem(storageKey, JSON.stringify(request));
+        form.reset();
+        showProgress(request);
+        progressSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        msg.textContent = data.message || "There was a problem sending your request. Please try again.";
+      }
+    } catch {
+      msg.textContent = "Network error. Please try again.";
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = previousLabel;
+    }
+  });
+
+  document.getElementById("new-request-button").addEventListener("click", () => {
+    clearProgressTimers();
+    window.localStorage.removeItem(storageKey);
+    progressSection.hidden = true;
+    formSection.hidden = false;
+    form.reset();
+    document.getElementById("email").focus();
+  });
+
+  try {
+    const storedRequest = JSON.parse(window.localStorage.getItem(storageKey));
+    if (
+      storedRequest &&
+      storedRequest.id &&
+      Number.isFinite(storedRequest.startedAt) &&
+      Date.now() - storedRequest.startedAt < 24 * 60 * 60 * 1000
+    ) {
+      showProgress(storedRequest);
+    }
+  } catch {
+    window.localStorage.removeItem(storageKey);
+  }
+</script>
 </body>
 </html>
