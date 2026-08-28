@@ -5,7 +5,7 @@
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>Get 20% off your Squarespace site</title>
 <meta content="Get 20% off your annual Squarespace subscription. Enter your email and an optional template link. We create the trial site and invite you through Squarespace." name="description"/>
-<meta content="" name="status-api"/>
+<meta content="https://automation.sitebuilder-discount.com" name="status-api"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   :root {
@@ -267,11 +267,10 @@
   const progressSteps = Array.from(document.querySelectorAll("[data-progress-step]"));
   const statusApi = document.querySelector('meta[name="status-api"]').content.trim();
   const storageKey = "sitebuilder-discount-request";
-  let progressTimers = [];
   let statusPoll = null;
 
   const progressMessages = [
-    "Your request has been received.",
+    "Your request was sent. Waiting for the automation to pick it up.",
     "We are creating your Squarespace trial site.",
     "Watch your mailbox for the Squarespace invitation and accept it to continue.",
     "Your invitation was accepted. We are transferring ownership.",
@@ -288,9 +287,7 @@
     completed: 5
   };
 
-  function clearProgressTimers() {
-    progressTimers.forEach(window.clearTimeout);
-    progressTimers = [];
+  function clearStatusPoll() {
     if (statusPoll) window.clearInterval(statusPoll);
     statusPoll = null;
   }
@@ -319,8 +316,14 @@
       );
       if (!response.ok) return;
       const data = await response.json();
-      const nextStep = statusSteps[data.status];
+      const effectiveStatus = ["retry_wait", "manual_review"].includes(data.status)
+        ? data.resumeStatus
+        : data.status;
+      const nextStep = statusSteps[effectiveStatus];
       if (Number.isInteger(nextStep)) setProgress(nextStep);
+      if (data.status === "manual_review") {
+        progressLive.textContent = "This step needs attention. We are checking it.";
+      }
       if (data.status === "completed" && statusPoll) {
         window.clearInterval(statusPoll);
         statusPoll = null;
@@ -331,26 +334,12 @@
   }
 
   function showProgress(request) {
-    clearProgressTimers();
+    clearStatusPoll();
     formSection.hidden = true;
     progressSection.hidden = false;
-
-    const elapsed = Math.max(0, Date.now() - request.startedAt);
-    if (elapsed < 1600) {
-      setProgress(0);
-      progressTimers.push(window.setTimeout(() => setProgress(1), 1600 - elapsed));
-      progressTimers.push(window.setTimeout(() => setProgress(2), 42000 - elapsed));
-    } else if (elapsed < 42000) {
-      setProgress(1);
-      progressTimers.push(window.setTimeout(() => setProgress(2), 42000 - elapsed));
-    } else {
-      setProgress(2);
-    }
-
+    setProgress(0);
     refreshRealStatus(request.id);
-    if (statusApi) {
-      statusPoll = window.setInterval(() => refreshRealStatus(request.id), 5000);
-    }
+    statusPoll = window.setInterval(() => refreshRealStatus(request.id), 5000);
   }
 
   function createRequestId() {
@@ -418,7 +407,7 @@
   });
 
   document.getElementById("new-request-button").addEventListener("click", () => {
-    clearProgressTimers();
+    clearStatusPoll();
     window.localStorage.removeItem(storageKey);
     progressSection.hidden = true;
     formSection.hidden = false;
