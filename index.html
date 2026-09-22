@@ -292,6 +292,10 @@
 <div aria-label="Fortschritt der Website-Erstellung" aria-valuemax="6" aria-valuemin="1" aria-valuenow="1" class="progress-meter" id="progress-meter" role="progressbar">
 <span class="progress-meter-fill" id="progress-meter-fill"></span>
 </div>
+<a aria-describedby="invitation-action-note" class="mt-5 inline-flex min-h-10 items-center justify-center rounded-full bg-black px-5 text-sm font-medium text-white hover:bg-gray-900" hidden id="invitation-action" rel="noopener noreferrer" target="_blank">
+  Einladung jetzt annehmen
+</a>
+<p class="mt-2 text-xs text-gray-500" hidden id="invitation-action-note">Du musst die Einladungs-E-Mail dafür nicht öffnen.</p>
 </div>
 </div>
 <ol class="progress-list" id="progress-list">
@@ -312,7 +316,7 @@
 <li class="progress-step" data-progress-step>
 <div class="progress-content">
 <span class="progress-title">Einladung annehmen</span>
-<span class="progress-description">Öffne die Squarespace-Mail und nimm die Einladung an, damit es weitergeht.</span>
+<span class="progress-description">Nimm die Einladung direkt hier an. Falls kein Link erscheint, nutze die Squarespace-E-Mail.</span>
 <span class="progress-duration">Versand: ungefähr 1 Minute; danach hängt es von dir ab</span>
 </div>
 </li>
@@ -451,6 +455,8 @@
   const progressElapsed = document.getElementById("progress-elapsed");
   const progressMeter = document.getElementById("progress-meter");
   const progressMeterFill = document.getElementById("progress-meter-fill");
+  const invitationAction = document.getElementById("invitation-action");
+  const invitationActionNote = document.getElementById("invitation-action-note");
   const statusApi = document.querySelector('meta[name="status-api"]').content.trim();
   const storageKey = "sitebuilder-discount-request";
   let statusPoll = null;
@@ -461,7 +467,7 @@
   const progressMessages = [
     "Deine Anfrage wurde gesendet. Die Automation übernimmt sie gleich.",
     "Wir erstellen deine Squarespace Test-Website.",
-    "Prüfe dein Postfach und nimm die Squarespace Einladung an.",
+    "Nimm die Squarespace Einladung direkt hier auf der Seite an.",
     "Deine Einladung wurde angenommen. Wir übertragen die Website.",
     "Die Website wurde übertragen. Wir entfernen jetzt unser Konto.",
     "Fertig. Deine Squarespace Website gehört jetzt vollständig dir."
@@ -475,6 +481,25 @@
     ownership_transferred: 4,
     completed: 5
   };
+
+  function normalizeInvitationUrl(value) {
+    try {
+      const url = new URL(String(value || ""));
+      const isSquarespaceHost = url.hostname === "squarespace.com" ||
+        url.hostname.endsWith(".squarespace.com");
+      return url.protocol === "https:" && isSquarespaceHost ? url.href : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function updateInvitationAction(value) {
+    const invitationUrl = normalizeInvitationUrl(value);
+    invitationAction.hidden = !invitationUrl;
+    invitationActionNote.hidden = !invitationUrl;
+    if (invitationUrl) invitationAction.href = invitationUrl;
+    else invitationAction.removeAttribute("href");
+  }
 
   function clearStatusPoll() {
     if (statusPoll) window.clearInterval(statusPoll);
@@ -534,6 +559,9 @@
         : data.status;
       const nextStep = statusSteps[effectiveStatus];
       if (Number.isInteger(nextStep)) setProgress(nextStep);
+      updateInvitationAction(
+        effectiveStatus === "invite_sent" ? data.invitationUrl : null
+      );
       if (data.status === "manual_review") {
         progressLive.textContent = "Dieser Schritt benötigt Aufmerksamkeit. Wir prüfen ihn.";
       }
@@ -555,6 +583,7 @@
     progressComplete = false;
     formSection.hidden = true;
     progressSection.hidden = false;
+    updateInvitationAction(null);
     setProgress(0);
     updateElapsed();
     elapsedTimer = window.setInterval(updateElapsed, 1000);
