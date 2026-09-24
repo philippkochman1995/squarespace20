@@ -206,6 +206,48 @@
     color: rgba(255, 255, 255, 0.72);
   }
 
+  .invitation-action {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    width: 100%;
+    min-height: 44px;
+    margin-top: 14px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: #78b5ca;
+    color: #071319;
+    font-size: 0.82rem;
+    font-weight: 700;
+    transition: background 180ms ease;
+  }
+
+  .invitation-action:hover {
+    background: #94c8d9;
+  }
+
+  .invitation-action:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+
+  .invitation-action-note {
+    position: relative;
+    z-index: 1;
+    display: block;
+    margin-top: 8px;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.7rem;
+    line-height: 1.45;
+  }
+
+  .invitation-action[hidden],
+  .invitation-action-note[hidden] {
+    display: none;
+  }
+
   @keyframes progress-scan {
     0% {
       left: -56px;
@@ -237,14 +279,13 @@
 <header class="text-left">
 <img alt="Squarespace Circle Gold Partner - Regular Agency 2026" class="h-auto w-56 sm:w-64" decoding="async" fetchpriority="high" height="681" src="/assets/squarespace-circle-gold-partner-2026.webp" width="2186"/>
 <h1 class="mt-6 text-4xl sm:text-4xl font-semibold tracking-normal">
-  Squarespace Rabatt:<br/>20 % sparen
+  Spare 20 Prozent bei deinem Squarespace Abo
 </h1>
 <p class="mt-5 text-sm text-gray-600 leading-relaxed max-w-sm">
-  Erhalte <strong>20 % Squarespace Rabatt</strong> auf die erste Zahlung eines jährlichen
-  Website-Tarifs. Du brauchst keinen Gutscheincode: Wähle eine Vorlage oder starte leer.
+  Spare dir <strong>43,20 €</strong> bei der ersten Zahlung deines jährlichen Squarespace-Abos.
 </p>
-<p class="mt-4 text-xs text-gray-500 leading-relaxed max-w-sm">
-  <span class="font-medium">So funktioniert es:</span> Wir erstellen die Test-Website über unser
+<p class="mt-5 text-sm text-gray-600 leading-relaxed max-w-sm">
+  <span class="font-semibold">So funktioniert es:</span> Wir erstellen die Test-Website über unser
   Circle-Konto und laden dich über Squarespace ein. Nach deiner Annahme wird die Website an dich
   übertragen und unser Konto automatisch entfernt.
 </p>
@@ -292,10 +333,6 @@
 <div aria-label="Fortschritt der Website-Erstellung" aria-valuemax="6" aria-valuemin="1" aria-valuenow="1" class="progress-meter" id="progress-meter" role="progressbar">
 <span class="progress-meter-fill" id="progress-meter-fill"></span>
 </div>
-<a aria-describedby="invitation-action-note" class="mt-5 inline-flex min-h-10 items-center justify-center rounded-full bg-black px-5 text-sm font-medium text-white hover:bg-gray-900" hidden id="invitation-action" rel="noopener noreferrer" target="_blank">
-  Einladung jetzt annehmen
-</a>
-<p class="mt-2 text-xs text-gray-500" hidden id="invitation-action-note">Du musst die Einladungs-E-Mail dafür nicht öffnen.</p>
 </div>
 </div>
 <ol class="progress-list" id="progress-list">
@@ -318,6 +355,10 @@
 <span class="progress-title">Einladung annehmen</span>
 <span class="progress-description">Nimm die Einladung direkt hier an. Falls kein Link erscheint, nutze die Squarespace-E-Mail.</span>
 <span class="progress-duration">Versand: ungefähr 1 Minute; danach hängt es von dir ab</span>
+<a aria-describedby="invitation-action-note" class="invitation-action" hidden id="invitation-action" rel="noopener noreferrer" target="_blank">
+  Einladung jetzt annehmen
+</a>
+<span class="invitation-action-note" hidden id="invitation-action-note">Öffnet die sichere Einladung direkt bei Squarespace.</span>
 </div>
 </li>
 <li class="progress-step" data-progress-step>
@@ -345,54 +386,6 @@
 <button class="mt-2 text-sm font-medium underline decoration-gray-300 underline-offset-4 hover:decoration-black" id="new-request-button" type="button">
   Weitere Anfrage senden
 </button>
-</section>
-
-<section aria-labelledby="discount-process-title" class="mt-16 border-t border-gray-200 pt-10">
-<p class="text-xs font-semibold uppercase text-gray-500">So funktioniert es</p>
-<h2 class="mt-2 text-2xl font-semibold leading-tight" id="discount-process-title">
-  20 % Squarespace Rabatt ohne Gutscheincode
-</h2>
-<p class="mt-4 text-sm leading-relaxed text-gray-600">
-  Als Squarespace Circle Gold Partner kann studio vis eine berechtigte Test-Website mit
-  hinterlegtem Partnerrabatt erstellen. Du behältst die Kontrolle: Squarespace sendet dir
-  die Einladung, du wirst Eigentümer und unser Zugriff wird entfernt.
-</p>
-<ol class="mt-7 space-y-6" aria-label="Ablauf des Squarespace Rabatts">
-<li class="grid grid-cols-[2rem_1fr] gap-3">
-<span aria-hidden="true" class="text-xs font-semibold text-gray-400">01</span>
-<div>
-<h3 class="text-sm font-semibold">Squarespace Vorlage wählen</h3>
-<p class="mt-1 text-sm leading-relaxed text-gray-600">Füge den Link zu einer offiziellen Squarespace Vorlage ein oder lass das Feld für eine leere Website frei.</p>
-</div>
-</li>
-<li class="grid grid-cols-[2rem_1fr] gap-3">
-<span aria-hidden="true" class="text-xs font-semibold text-gray-400">02</span>
-<div>
-<h3 class="text-sm font-semibold">Squarespace Einladung annehmen</h3>
-<p class="mt-1 text-sm leading-relaxed text-gray-600">Wir erstellen die Test-Website und Squarespace sendet dir eine Administrator-Einladung per E-Mail.</p>
-</div>
-</li>
-<li class="grid grid-cols-[2rem_1fr] gap-3">
-<span aria-hidden="true" class="text-xs font-semibold text-gray-400">03</span>
-<div>
-<h3 class="text-sm font-semibold">Eigentümer werden und jährlich bezahlen</h3>
-<p class="mt-1 text-sm leading-relaxed text-gray-600">Die Website wird automatisch an dich übertragen. Wähle beim Abschluss die jährliche Zahlung, um 20 % auf die erste Zahlung zu erhalten.</p>
-</div>
-</li>
-</ol>
-</section>
-
-<section aria-labelledby="discount-terms-title" class="mt-14 border-t border-gray-200 pt-10">
-<p class="text-xs font-semibold uppercase text-gray-500">Rabattbedingungen</p>
-<h2 class="mt-2 text-2xl font-semibold leading-tight" id="discount-terms-title">Wofür der 20-%-Rabatt gilt</h2>
-<p class="mt-4 text-sm leading-relaxed text-gray-600">
-  Der Circle Gold Rabatt von 20 % gilt automatisch für die erste Zahlung eines berechtigten
-  jährlichen Squarespace Website-Abonnements. Er gilt nicht für monatliche Tarife, Verlängerungen,
-  Reaktivierungen oder spätere Tarifwechsel und kann nicht mit anderen Angeboten kombiniert werden.
-</p>
-<a class="mt-4 inline-block text-sm font-medium underline decoration-gray-300 underline-offset-4 hover:decoration-black" href="https://support.squarespace.com/hc/en-us/articles/17127487603341-Squarespace-Circle-discount-and-benefits-overview" rel="noopener noreferrer" target="_blank">
-  Offizielle Squarespace Circle Rabattbedingungen lesen
-</a>
 </section>
 
 <section aria-labelledby="faq-title" class="mt-14 border-t border-gray-200 pt-10">
